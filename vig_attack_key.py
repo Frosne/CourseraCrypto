@@ -8,7 +8,7 @@ def factor(n):
     for i in range(2,nh+2):
         if (n%i == 0):
             a.add(i)
-    return sorted(list(a))    
+    return sorted(list(a) + [n])
 
 def kasinski(message):
     lst =  map(lambda x: bigram_treatment(x), generate_bigram(message))
@@ -32,12 +32,13 @@ def bigram_treatment(lst_occ):
     return [lst_occ[0]] + list(a)    
 
 def bigram_search(message, bigram):
-    result = 0
+    result = -1
     lst = [bigram]
-    while (result !=-1):
+    while True:
         result = message.find(bigram, result+1)
-        if not result == -1 :
-            lst = lst + [result]
+        if result == -1:
+            break
+        lst = lst + [result]
 
     lst_occ = [bigram]
     for i in range(1, len(lst)-1):
@@ -60,7 +61,9 @@ def generate_bigram(message):
     return result    
 
 def main():
-    print(kasinski("abababhjhjab"))
+    cipher = vig.encrypt("relations", "tobeornottobethatisthequestion")
+
+    print(kasinski(cipher))
     
 
 if __name__ == '__main__':
